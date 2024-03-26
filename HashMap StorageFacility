@@ -1,0 +1,43 @@
+import java.util.HashMap;
+import java.util.ArrayList;
+
+
+public class StorageFacility {
+    private HashMap<String, ArrayList<String>> seznam;
+    
+    public StorageFacility(){
+        this.seznam = new HashMap<>();
+    }
+    
+    public void add(String unit, String item){
+        this.seznam.putIfAbsent(unit, new ArrayList<>());
+        
+        ArrayList list = this.seznam.get(unit);
+        list.add(item);
+    }
+    
+    public ArrayList<String> contents(String storageUnit){
+        return seznam.getOrDefault(storageUnit, new ArrayList<>());
+    }
+    
+    public void remove(String storageUnit, String item){
+        if(!this.seznam.containsKey(storageUnit)){
+            return;
+        }
+        
+        this.seznam.get(storageUnit).remove(item);
+        
+        if(this.seznam.get(storageUnit).isEmpty()){
+            this.seznam.remove(storageUnit);
+        }
+    }
+    
+    public ArrayList<String> storageUnits(){
+        ArrayList<String> list = new ArrayList<>();
+        for(String name: seznam.keySet()){
+            list.add(name);
+        }
+        
+        return list;
+    }
+}
